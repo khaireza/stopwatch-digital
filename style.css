@@ -1,41 +1,55 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Poppins', sans-serif;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* Ganti dengan link wallpaper */
-  background: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fblue-technology-background&psig=AOvVaw0aGqXnnfgcu-VLqymxXVdx&ust=1757385162990000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCMD165GQyI8DFQAAAAAdAAAAABAh") no-repeat center center/cover;
+  background: #000; /* Bisa diganti wallpaper kalau mau */
   color: white;
 }
 
-.container {
+.header {
+  width: 100%;
+  padding: 20px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.6); /* transparan biar tulisannya kontras */
-  padding: 30px;
-  border-radius: 15px;
+  font-size: 2rem;
+  font-weight: 600; /* Poppins SemiBold */
+  background: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
-.title {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  font-weight: 700;
+.container {
+  margin-top: 120px; /* biar gak ketutupan header */
+  text-align: center;
 }
 
 #display {
   font-size: 4rem;
   margin: 20px 0;
-  color: #00ff66; /* hijau neon */
-  font-weight: bold;
+  font-weight: 600; /* SemiBold */
   letter-spacing: 3px;
+}
+
+/* Warna saat berhenti */
+#display.stopped {
+  color: #00ff66; /* hijau */
+}
+
+/* Warna saat berjalan */
+#display.running {
+  color: #ffcc00; /* kuning */
 }
 
 .buttons button {
   padding: 12px 25px;
   margin: 8px;
   font-size: 1rem;
+  font-weight: 500; /* Poppins Medium */
   border: none;
   border-radius: 8px;
   background: #222;
@@ -48,4 +62,3 @@ body {
   background: #00ff66;
   color: black;
 }
-
