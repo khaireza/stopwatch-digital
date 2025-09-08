@@ -1,39 +1,50 @@
 body {
   margin: 0;
   padding: 0;
-  background: black;
+  font-family: 'Montserrat', sans-serif;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* Ganti dengan link wallpaper */
+  background: url("https://images.unsplash.com/photo-1526401281623-3fa4eb3f4865") no-repeat center center/cover;
+  color: white;
 }
 
-#stopwatch {
+.container {
   text-align: center;
+  background: rgba(0, 0, 0, 0.6); /* transparan biar tulisannya kontras */
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
 }
 
 #display {
-  font-size: 6rem;
-  font-family: 'Courier New', monospace;
-  color: #00ff00;
-  margin: 0;
+  font-size: 4rem;
+  margin: 20px 0;
+  color: #00ff66; /* hijau neon */
+  font-weight: bold;
+  letter-spacing: 3px;
 }
 
-#controls {
-  margin-top: 10px;
-}
-
-button {
-  background: #222;
-  color: #fff;
-  border: 1px solid #444;
-  padding: 10px 20px;
-  margin: 0 5px;
+.buttons button {
+  padding: 12px 25px;
+  margin: 8px;
   font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #222;
+  color: white;
   cursor: pointer;
-  border-radius: 5px;
+  transition: 0.3s;
 }
 
-button:hover {
-  background: #333;
+.buttons button:hover {
+  background: #00ff66;
+  color: black;
 }
