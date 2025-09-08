@@ -20,15 +20,13 @@ startStopBtn.addEventListener("click", function () {
       updateDisplay();
     }, 1000);
     isRunning = true;
-    startStopBtn.textContent = "Stop";
-    display.classList.remove("stopped");
-    display.classList.add("running");
+    startStopBtn.textContent = "Pause";
+    display.className = "running";
   } else {
     clearInterval(timer);
     isRunning = false;
     startStopBtn.textContent = "Start";
-    display.classList.remove("running");
-    display.classList.add("stopped");
+    display.className = "paused";
   }
 });
 
@@ -38,8 +36,7 @@ resetBtn.addEventListener("click", function () {
   seconds = 0;
   updateDisplay();
   startStopBtn.textContent = "Start";
-  display.classList.remove("running");
-  display.classList.add("stopped");
+  display.className = "reset";
 });
 
 // Inisialisasi tampilan awal
