@@ -7,7 +7,7 @@ body {
   justify-content: center;
   align-items: center;
   /* Ganti dengan link wallpaper */
-  background: url("https://images.unsplash.com/photo-1526401281623-3fa4eb3f4865") no-repeat center center/cover;
+  background: url("https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fsearch%2Fblue-technology-background&psig=AOvVaw0aGqXnnfgcu-VLqymxXVdx&ust=1757385162990000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCMD165GQyI8DFQAAAAAdAAAAABAh") no-repeat center center/cover;
   color: white;
 }
 
@@ -48,3 +48,4 @@ body {
   background: #00ff66;
   color: black;
 }
+
