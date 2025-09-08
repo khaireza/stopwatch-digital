@@ -1,49 +1,46 @@
 let timer;
 let isRunning = false;
-let seconds = 0, minutes = 0, hours = 0;
+let seconds = 0;
 
 const display = document.getElementById("display");
 const startStopBtn = document.getElementById("startStop");
 const resetBtn = document.getElementById("reset");
 
 function updateDisplay() {
-  let h = hours < 10 ? "0" + hours : hours;
-  let m = minutes < 10 ? "0" + minutes : minutes;
-  let s = seconds < 10 ? "0" + seconds : seconds;
-  display.textContent = `${h}:${m}:${s}`;
+  let hrs = String(Math.floor(seconds / 3600)).padStart(2, "0");
+  let mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+  let secs = String(seconds % 60).padStart(2, "0");
+  display.textContent = `${hrs}:${mins}:${secs}`;
 }
 
-function startStop() {
-  if (isRunning) {
-    clearInterval(timer);
-    startStopBtn.textContent = "Start";
-  } else {
+startStopBtn.addEventListener("click", function () {
+  if (!isRunning) {
     timer = setInterval(() => {
       seconds++;
-      if (seconds === 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes === 60) {
-          minutes = 0;
-          hours++;
-        }
-      }
       updateDisplay();
     }, 1000);
-    startStopBtn.textContent = "Pause";
+    isRunning = true;
+    startStopBtn.textContent = "Stop";
+    display.classList.remove("stopped");
+    display.classList.add("running");
+  } else {
+    clearInterval(timer);
+    isRunning = false;
+    startStopBtn.textContent = "Start";
+    display.classList.remove("running");
+    display.classList.add("stopped");
   }
-  isRunning = !isRunning;
-}
+});
 
-function reset() {
+resetBtn.addEventListener("click", function () {
   clearInterval(timer);
-  seconds = 0; minutes = 0; hours = 0;
+  isRunning = false;
+  seconds = 0;
   updateDisplay();
   startStopBtn.textContent = "Start";
-  isRunning = false;
-}
+  display.classList.remove("running");
+  display.classList.add("stopped");
+});
 
-startStopBtn.addEventListener("click", startStop);
-resetBtn.addEventListener("click", reset);
-
+// Inisialisasi tampilan awal
 updateDisplay();
