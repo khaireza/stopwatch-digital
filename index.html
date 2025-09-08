@@ -1,91 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Timer Digital</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
       height: 100vh;
       display: flex;
-      justify-content: center;   /* center vertikal */
-      align-items: center;       /* center horizontal */
-      background: #000;
-    }
-
-    .wrapper {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
-      gap: 30px;
+      background: black;
+      font-family: 'Poppins', sans-serif;
     }
 
-    .header {
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      font-weight: 600;
       font-size: 2.5rem;
-      font-weight: 600; /* Poppins SemiBold */
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .timer {
+      font-size: 3rem;
+      font-weight: 600;
+      padding: 15px 30px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-bottom: 20px;
+      background: #555; /* default abu */
+      color: white;
+      min-width: 220px;
+    }
+
+    .timer.running {
+      background: green;
       color: white;
     }
 
-    #display {
-      font-size: 4rem;
-      font-weight: 600;
-      transition: 0.3s;
-      padding: 10px 20px;
-      border-radius: 10px;
+    .timer.paused {
+      background: yellow;
+      color: black;
     }
 
-    /* Warna sesuai status */
-    #display.reset {
-      color: red;
-    }
-
-    #display.running {
-      color: #00ff00;
-    }
-
-    #display.paused {
-      color: #ffcc00;
+    .timer.reset {
+      background: gray;
+      color: white;
     }
 
     .buttons {
       display: flex;
-      gap: 20px;
+      justify-content: center;
+      gap: 15px;
     }
 
-    .buttons button {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 40px;
+    button {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
       font-size: 1rem;
-      font-weight: 500; /* Poppins Medium */
+      padding: 10px 25px;
+      border: none;
+      border-radius: 25px;
       cursor: pointer;
-      transition: 0.3s;
+      transition: 0.2s;
     }
 
     #startStop {
-      background: #33b5ff;
-      color: black;
+      background: #3498db;
+      color: white;
+    }
+
+    #startStop:hover {
+      background: #2980b9;
     }
 
     #reset {
-      background: #ddd;
+      background: #bdc3c7;
       color: black;
     }
 
-    .buttons button:hover {
-      opacity: 0.8;
+    #reset:hover {
+      background: #95a5a6;
     }
   </style>
 </head>
 <body>
-  <div class="wrapper">
-    <div class="header">Timer Digital</div>
-    <div id="display" class="reset">00:00:00</div>
+  <div class="container">
+    <h1>Timer Digital</h1>
+    <div id="timer" class="timer reset">00:00:00</div>
     <div class="buttons">
       <button id="startStop">Start</button>
       <button id="reset">Reset</button>
@@ -93,53 +101,56 @@
   </div>
 
   <script>
-    let timer;
-    let isRunning = false;
-    let elapsedTime = 0;
+    let timerDisplay = document.getElementById('timer');
+    let startStopBtn = document.getElementById('startStop');
+    let resetBtn = document.getElementById('reset');
 
-    const display = document.getElementById("display");
-    const startStopBtn = document.getElementById("startStop");
-    const resetBtn = document.getElementById("reset");
+    let timer = null;
+    let seconds = 0, minutes = 0, hours = 0;
+    let isRunning = false;
 
     function updateDisplay() {
-      let hours = Math.floor(elapsedTime / 3600);
-      let minutes = Math.floor((elapsedTime % 3600) / 60);
-      let seconds = elapsedTime % 60;
-
-      display.textContent = 
-        `${hours.toString().padStart(2, '0')}:` +
-        `${minutes.toString().padStart(2, '0')}:` +
-        `${seconds.toString().padStart(2, '0')}`;
+      let h = hours < 10 ? "0" + hours : hours;
+      let m = minutes < 10 ? "0" + minutes : minutes;
+      let s = seconds < 10 ? "0" + seconds : seconds;
+      timerDisplay.innerText = `${h}:${m}:${s}`;
     }
 
-    function startStop() {
+    function runTimer() {
+      seconds++;
+      if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes === 60) {
+          minutes = 0;
+          hours++;
+        }
+      }
+      updateDisplay();
+    }
+
+    startStopBtn.addEventListener('click', () => {
       if (!isRunning) {
-        timer = setInterval(() => {
-          elapsedTime++;
-          updateDisplay();
-        }, 1000);
+        timer = setInterval(runTimer, 1000);
         isRunning = true;
-        startStopBtn.textContent = "Pause";
-        display.className = "running";
+        startStopBtn.innerText = "Pause";
+        timerDisplay.className = "timer running";
       } else {
         clearInterval(timer);
         isRunning = false;
-        startStopBtn.textContent = "Start";
-        display.className = "paused";
+        startStopBtn.innerText = "Start";
+        timerDisplay.className = "timer paused";
       }
-    }
+    });
 
-    function reset() {
+    resetBtn.addEventListener('click', () => {
       clearInterval(timer);
-      isRunning = false;
-      elapsedTime = 0;
+      seconds = 0; minutes = 0; hours = 0;
       updateDisplay();
-      startStopBtn.textContent = "Start";
-      display.className = "reset";
-    }
-
-    startStopBtn.addEventListener("click", startStop);
-    resetBtn.addEventListener("click", reset);
+      isRunning = false;
+      startStopBtn.innerText = "Start";
+      timerDisplay.className = "timer reset";
+    });
 
     updateDisplay();
   </script>
